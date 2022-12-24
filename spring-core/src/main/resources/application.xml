@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config/>
+    <!--    AutowiredAnnotationBeanPostProcessor, CommonAnnotationBeanPostProcessor, PersistenceAnnotationBeanPostProcessor, 和前面提到的 RequiredAnnotationBeanPostProcessor.)-->
+    <!--    如果将 <context:annotation-config/> 放在DispatcherServlet的WebApplicationContext中， 它只检查控制器中的@Autowired bean，而不检查您的服务-->
+
+    <!-- 导入其他xml资源  -->
+    <import resource="service-dao.xml"/>
+
+    <!--  id 是spring的唯一表示,一个Bean只能有一个,name可以有多个  -->
+    <bean id="personId" name="person" class="com.wx.domain.Person">
+        <property name="id" value="aa"/>
+        <property name="name" value="武侠"/>
+        <property name="sex" value="男"/>
+    </bean>
+<!--    这些bean定义表示为BeanDefinition对象，其中包含（其他信息）以下元数据-->
+<!--    1. 限定包类名称: 通常，定义的bean的实际实现类。-->
+<!--    2. bean行为配置元素, 定义Bean的行为约束(例如作用域，生命周期回调等等）-->
+<!--    3. bean需要引用其他bean来完成工作. 这些引用也称为协作或依赖关系.-->
+<!--    4. 其他配置用于新对象的创建，例如使用bean的数量来管理连接池，或者限制池的大小。-->
+    <bean id="mappings"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"/>
+
+
+</beans>

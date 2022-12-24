@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-autowire-candidates="*"
+>
+    <bean id="personMapper" class="com.wx.mapper.PersonMapper"/>
+    <bean id="person" class="com.wx.domain.Person"/>
+
+    <bean id="personService" class="com.wx.service.PersonService" autowire="no">
+        <property name="personMapper" ref="personMapper"/>
+    </bean>
+    <!-- byName,根据Bean的名称进行匹配,byType 根据Class进行匹配,constructor类似byType  -->
+    <!-- autowire缺点,1:容易出现匹配不上的问题 2:没有基本类型的自动匹配 -->
+    <!--  可以配合@Primary,@Qualifier 选取Bean,解决多Bean匹配  -->
+</beans>
