@@ -7,4 +7,11 @@
 
     <bean  class="com.wx.aware.PersonAware" id="personAware"/>
 
+    <bean  class="com.wx.aware.BeanNameAwareTest" id="beanNameAwareTest"/>
+
+
+    <bean id="messageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="locale.customer.messages"/>
+    </bean>
 </beans>

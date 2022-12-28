@@ -14,13 +14,16 @@ import org.springframework.context.annotation.Lazy;
 @Data
 @Lazy
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class Person implements InitializingBean {
 	
 	private String id;
 	private String name;
 	private String sex;
+	
+	public Person(){
+		System.out.println("Person constructor");
+	}
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {

@@ -1,17 +1,24 @@
 package com.wx.application;
 
 
+import com.wx.aware.BeanFactoryAwareImpl;
+import com.wx.aware.BeanNameAwareTest;
 import com.wx.aware.PersonAware;
+import com.wx.config.Animal;
+import com.wx.config.SpringConfiguration;
+import com.wx.domain.Person;
 import com.wx.service.PersonService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.core.annotation.Order;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * Spring 存在三种注入方式.
@@ -65,7 +72,37 @@ public class ApplicationTest {
 	public void aware(){
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("aware.xml");
 		PersonAware bean = applicationContext.getBean(PersonAware.class);
-		System.out.println(bean.getPersonMapper().list());
+		BeanNameAwareTest beanNameAwareTest = applicationContext.getBean(BeanNameAwareTest.class);
+		System.out.println(beanNameAwareTest.getName());
+		BeanFactoryAwareImpl beanFactoryAware = applicationContext.getBean(BeanFactoryAwareImpl.class);
+		System.out.println(beanFactoryAware.getBeanFactory());
+	}
+	
+	@Test
+	public void messageSource(){
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("aware.xml");
+		String name = applicationContext.getMessage("customer.name",
+				new Object[] { 28,"http://www.yiibai.com" }, Locale.US);
+		System.out.println("Customer name (English) : " + name);
+		String namechinese = applicationContext.getMessage("customer.name",
+				new Object[] {29, "http://www.yiibai.com" },
+				Locale.SIMPLIFIED_CHINESE);
+		System.out.println("Customer name (Chinese) : " + namechinese);
+		
+	}
+	
+	@Test
+	public void postProcessor(){
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("postProcessor.xml");
+		System.out.println(applicationContext.getBean(Person.class));
+	}
+	
+	@Test
+	public void annotationConfig(){
+		ApplicationContext applicationContext =
+				new AnnotationConfigApplicationContext(SpringConfiguration.class);
+		Animal bean = applicationContext.getBean(Animal.class);
+		System.out.println(bean);
 	}
 	
 	
